@@ -119,7 +119,7 @@ public class EmployeeManagerController {
 		
 		getConnection();
 		
-		while(filenotread){     //reads each line and writes it to db until the file is empty or a duplicate entry is encountered
+		while(filenotread){     //reads each line and writes it to db until the file is empty
 			readCSV();
 			writeToDb();
 			}
