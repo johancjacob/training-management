@@ -110,18 +110,18 @@ public class EmployeeManagerController {
 		
 		catch(SQLIntegrityConstraintViolationException e) {
 			System.out.println("The emp_id "+empId+ " already exists...");
-			filenotread=false;
+			//filenotread=false;
 		}
 	}
 	
 	
-	public void writeDataToDb(EmployeeManagerController emc) throws SQLException, FileNotFoundException, IOException {
+	public void writeDataToDb() throws SQLException, FileNotFoundException, IOException {
 		
-		emc.getConnection();
+		getConnection();
 		
 		while(filenotread){     //reads each line and writes it to db until the file is empty or a duplicate entry is encountered
-			emc.readCSV();
-			emc.writeToDb();
+			readCSV();
+			writeToDb();
 			}
 		
 	}

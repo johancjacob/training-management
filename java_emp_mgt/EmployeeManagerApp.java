@@ -11,7 +11,7 @@ public class EmployeeManagerApp {
 		String file="src/project/employee.csv";
 		
 		EmployeeManagerController emc=new EmployeeManagerController(file);
-		emc.writeDataToDb(emc);
+		emc.writeDataToDb();
 }
 }
 
