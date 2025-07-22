@@ -1,4 +1,4 @@
-package com.litmus7.project;
+package project;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -52,7 +52,16 @@ public class EmployeeManagerController {
 					return dep!=null && VALID_DEPTS.contains(dep);
 				}
 				
+				public static boolean isValidDate(String dat) {
+					String regex="^\\d{4}-(0[1-9]|1[0-2])-([0][1-9]|[12][0-9]|3[01])$";
+					if(dat.matches(regex)) {
+						return true;
+					}
+					else
+						return false;
+				}
 	}
+					
 	
 	public String getConnection() throws SQLException {            		   //connection method
 	        
@@ -101,6 +110,10 @@ public class EmployeeManagerController {
 					System.out.println("Invalid department for:"+empId);
 					validentries=false;
 					
+				}
+				else if(!ValidationUtils.isValidDate(joinDate)) {
+					System.out.println("Invalid date format for:"+empId);
+					validentries=false;
 				}
 					
 				
@@ -159,7 +172,6 @@ public class EmployeeManagerController {
 		
 		catch(SQLIntegrityConstraintViolationException e) {
 			System.out.println("The emp_id "+empId+ " already exists...");
-			//filenotread=false;
 		}
 	
 	}

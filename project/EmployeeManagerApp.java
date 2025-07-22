@@ -1,4 +1,4 @@
-package com.litmus7.project;
+package project;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
