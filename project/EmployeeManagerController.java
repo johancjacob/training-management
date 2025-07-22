@@ -10,10 +10,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Arrays;
+import java.util.List;
 
 public class EmployeeManagerController {
 	
 	boolean filenotread=true;
+	boolean validentries=true;
 	BufferedReader br;
 	FileReader fr;
 	Connection conn;
@@ -32,6 +35,24 @@ public class EmployeeManagerController {
 		br=new BufferedReader(fr);
 	}
 	
+
+	
+	public static class ValidationUtils{      //nested class for validation
+		private static final List<String> VALID_DEPTS=Arrays.asList("HR","Engineering","Marketing","Sales","Logistics");
+		
+				public static boolean isValidEmpId(int id) {
+					return ((id>=100)&&(id<=999));
+				}
+				
+				public static boolean isValidEmail(String mail) {
+					return mail!=null && mail.endsWith("@gmail.com");
+				}
+				
+				public static boolean isValidDepartment(String dep) {
+					return dep!=null && VALID_DEPTS.contains(dep);
+				}
+				
+	}
 	
 	public String getConnection() throws SQLException {            		   //connection method
 	        
@@ -57,8 +78,8 @@ public class EmployeeManagerController {
 				line=line.replace("\"", "");
 				String[] fields=line.split(",");
 				
-					
-				empId  = Integer.parseInt(fields[0]);
+			
+				empId  = Integer.parseInt(fields[0]);		
 				firstName=fields[1];
 				lastName=fields[2];
 				email=fields[3];
@@ -66,6 +87,22 @@ public class EmployeeManagerController {
 				dept=fields[5];
 				salary=Integer.parseInt(fields[6]);
 				joinDate=fields[7];
+				
+				
+				if(!ValidationUtils.isValidEmpId(empId)) {
+					System.out.println("Invalid emp_id for:"+empId);
+					validentries=false;
+				}
+				else if(!ValidationUtils.isValidEmail(email)) {
+					System.out.println("Invalid email for:"+empId);
+					validentries=false;
+				}
+				else if(!ValidationUtils.isValidDepartment(dept)) {
+					System.out.println("Invalid department for:"+empId);
+					validentries=false;
+					
+				}
+					
 				
 				
 	         }
@@ -88,7 +125,7 @@ public class EmployeeManagerController {
 		
 		try {
 			
-		if(filenotread) {									 
+		if(filenotread && validentries) {									 
 			
 			String sql="insert into employee(emp_id,first_name,last_name,email,phone,department,salary,join_date) values(?,?,?,?,?,?,?,?)";
 			PreparedStatement pstmt=conn.prepareStatement(sql);
@@ -102,9 +139,21 @@ public class EmployeeManagerController {
 			pstmt.setDate(8,Date.valueOf(joinDate));
 			pstmt.executeUpdate();	
 			
+			
+
+			
+			
 			System.out.println("Successfully inserted:");
 			System.out.println(empId+" "+firstName+" "+lastName+" "+email+" "+phone+" "+dept+" "+salary+" "+joinDate);
+			
+			return;
+			
+			
+			
 		}
+		
+		validentries=true;
+				
 		
 		}
 		
@@ -112,6 +161,7 @@ public class EmployeeManagerController {
 			System.out.println("The emp_id "+empId+ " already exists...");
 			//filenotread=false;
 		}
+	
 	}
 	
 	
@@ -127,4 +177,3 @@ public class EmployeeManagerController {
 	}
 	
 }
-
