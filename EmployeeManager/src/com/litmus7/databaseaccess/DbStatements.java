@@ -8,4 +8,5 @@ public class DbStatements {
 	public static final String updateemployeephonesql="update employee set phone=? where emp_id=?";
 	public static final String getemployeesbydeptsql="select emp_id from employee where department=?";
 	public static final String showemployeessql="select * from employee where emp_id=?";
+	public static final String showallemployeessql="select * from employee";
 }

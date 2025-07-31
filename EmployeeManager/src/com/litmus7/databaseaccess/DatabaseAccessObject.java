@@ -216,7 +216,7 @@ public class DatabaseAccessObject {
 		
 		Statement stmt=conn.createStatement();
 		
-		ResultSet rs=stmt.executeQuery("select * from employee");
+		ResultSet rs=stmt.executeQuery(DbStatements.showallemployeessql);
 		
 		ResultSetMetaData rsmetadata=rs.getMetaData();
 		int count=rsmetadata.getColumnCount();
