@@ -38,7 +38,7 @@ public class EmployeeManagerUI {
 	
 		//System.out.println(ems.countOfEmployeesInDept("HR"));				//calls the db procedure for getting the count of employees in a given dept.
 		
-		System.out.println(ems.getEmployeesWithinSalaryRange(1,1000000));	//calls the db procedure for getting employees whose salaries fall within a range.
+		System.out.println(ems.getEmployeesWithinSalaryRange(1,10));	//calls the db procedure for getting employees whose salaries fall within a range.
 		
 		System.out.println(ems.getAllColumnsOfEmployee());
 	

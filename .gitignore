@@ -11,5 +11,5 @@ Thumbs.db
 
 EmployeeManager/.classpath
 EmployeeManager./project
-EmployeeManager./settings
-EmployeeManager./bin/
+EmployeeManager/.settings/
+EmployeeManager/bin/
