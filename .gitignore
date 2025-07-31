@@ -8,3 +8,8 @@ Thumbs.db
 
 *.log
 .metadata/
+
+EmployeeManager/.classpath
+EmployeeManager./project
+EmployeeManager./settings
+EmployeeManager./bin/
