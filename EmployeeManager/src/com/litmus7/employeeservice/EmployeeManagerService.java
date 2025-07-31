@@ -199,11 +199,11 @@ public class EmployeeManagerService {
 	    	return new Response(true,"List of employees whose salaries lie between "+sal1+" and "+sal2+" obtained.");
 	    }
 	    
-	    public Response getAllColumnsOfEmployee() throws FileNotFoundException, ClassNotFoundException, SQLException, IOException {
+	    public Response getAllColumnsOfEmployeeTable() throws FileNotFoundException, ClassNotFoundException, SQLException, IOException {
 	    	
 	    	DatabaseAccessObject dao=new DatabaseAccessObject();
 	    	
-	    	int count=dao.getAllColumnsOfEmployee();
+	    	int count=dao.getAllColumnsOfEmployeeTable();
 	    	
 	    	return new Response(true,"All "+count+" columns of Employee table listed.");
 	    }

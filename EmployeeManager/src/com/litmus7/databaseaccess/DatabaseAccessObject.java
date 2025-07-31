@@ -212,7 +212,7 @@ public class DatabaseAccessObject {
 		
 	}
 	
-	public int getAllColumnsOfEmployee() throws SQLException {
+	public int getAllColumnsOfEmployeeTable() throws SQLException {
 		
 		Statement stmt=conn.createStatement();
 		
