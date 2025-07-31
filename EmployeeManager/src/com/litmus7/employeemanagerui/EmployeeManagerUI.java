@@ -40,7 +40,7 @@ public class EmployeeManagerUI {
 		
 		System.out.println(ems.getEmployeesWithinSalaryRange(1,10));	//calls the db procedure for getting employees whose salaries fall within a range.
 		
-		System.out.println(ems.getAllColumnsOfEmployeeTable());
+		System.out.println(ems.getAllColumnsOfEmployeeTable());			//fetches all the columns of employee table
 	
 	}
 }
