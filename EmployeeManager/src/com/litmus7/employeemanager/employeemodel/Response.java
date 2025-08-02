@@ -1,4 +1,4 @@
-package com.litmus7.employeemodel;
+package com.litmus7.employeemanager.employeemodel;
 
 public class Response<T> {
 	

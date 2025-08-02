@@ -1,17 +1,16 @@
-package com.litmus7.employeemanagercontroller;
-import com.litmus7.employeemodel.Response;
-import com.litmus7.employeeservice.EmployeeService;
-import com.litmus7.util.CSVFileReader;
-import com.litmus7.util.DataValidator;
-import com.litmus7.constants.StatusCode;
-
+package com.litmus7.employeemanager.employeemanagercontroller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.litmus7.employeemodel.Employee;
+import com.litmus7.employeemanager.constants.StatusCode;
+import com.litmus7.employeemanager.employeemodel.Employee;
+import com.litmus7.employeemanager.employeemodel.Response;
+import com.litmus7.employeemanager.employeeservice.EmployeeService;
+import com.litmus7.employeemanager.util.CSVFileReader;
+import com.litmus7.employeemanager.util.DataValidator;
 
 public class EmployeeManagerController {
 	

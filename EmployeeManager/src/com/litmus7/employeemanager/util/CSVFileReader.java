@@ -1,6 +1,4 @@
-package com.litmus7.util;
-
-import com.litmus7.employeemodel.Employee;
+package com.litmus7.employeemanager.util;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -8,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.litmus7.employeemanager.employeemodel.Employee;
 
 public class CSVFileReader {
 	static FileReader fr;

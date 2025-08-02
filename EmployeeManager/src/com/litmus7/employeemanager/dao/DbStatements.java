@@ -1,4 +1,4 @@
-package com.litmus7.dao;
+package com.litmus7.employeemanager.dao;
 
 public class DbStatements {
 	

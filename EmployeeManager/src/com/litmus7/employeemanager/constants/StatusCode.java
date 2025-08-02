@@ -1,4 +1,4 @@
-package com.litmus7.constants;
+package com.litmus7.employeemanager.constants;
 
 public class StatusCode {
 	public static final int SUCCESS=200;

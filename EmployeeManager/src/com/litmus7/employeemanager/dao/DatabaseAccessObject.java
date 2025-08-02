@@ -1,4 +1,4 @@
-package com.litmus7.dao;
+package com.litmus7.employeemanager.dao;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,8 +10,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.litmus7.employeemodel.Employee;
-import com.litmus7.util.DbConnection;
+import com.litmus7.employeemanager.employeemodel.Employee;
+import com.litmus7.employeemanager.util.DbConnection;
 
 
 

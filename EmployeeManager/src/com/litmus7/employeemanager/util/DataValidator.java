@@ -1,4 +1,4 @@
-package com.litmus7.util;
+package com.litmus7.employeemanager.util;
 
 import java.util.Arrays;
 import java.util.List;

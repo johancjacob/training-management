@@ -1,8 +1,8 @@
-package com.litmus7.employeeservice;
+package com.litmus7.employeemanager.employeeservice;
 
-import com.litmus7.util.DataValidator;
-import com.litmus7.dao.DatabaseAccessObject;
-import com.litmus7.employeemodel.Employee;
+import com.litmus7.employeemanager.dao.DatabaseAccessObject;
+import com.litmus7.employeemanager.employeemodel.Employee;
+import com.litmus7.employeemanager.util.DataValidator;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
