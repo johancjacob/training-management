@@ -50,12 +50,12 @@ public class EmployeeManagerController {
 		if(DataValidator.isValidEmpId(empId)) {
 			EmployeeService ems=new EmployeeService();
 			if(ems.deleteEmployee(empId))
-				return new Response(200,"successfully deleted the record for "+empId);
+				return new Response(StatusCode.SUCCESS,"successfully deleted the record for "+empId);
 			else
-				return new Response(400,"empId "+empId+" doesnt exist in db");
+				return new Response(StatusCode.FAILURE,"empId "+empId+" doesnt exist in db");
 		}
 		else
-			return new Response(400,"invalid empId");
+			return new Response(StatusCode.FAILURE,"invalid empId");
 	}
 	
 	public Response updateEmployeeSalary(int empId,int salary) throws FileNotFoundException, ClassNotFoundException, SQLException, IOException {
@@ -63,12 +63,12 @@ public class EmployeeManagerController {
 		if(DataValidator.isValidEmpId(empId)) {
 			EmployeeService ems=new EmployeeService();
 			if(ems.updateEmployeeSalary(empId, salary))
-				return new Response(200,"successfully updated salary for "+empId);
+				return new Response(StatusCode.SUCCESS,"successfully updated salary for "+empId);
 			else
-				return new Response(400,"record for "+empId+" doesnt exist");
+				return new Response(StatusCode.FAILURE,"record for "+empId+" doesnt exist");
 		}
 		else
-			return new Response(400,"not a valid empId");
+			return new Response(StatusCode.FAILURE,"not a valid empId");
 	}
 	
 	public Response<List<Employee>> getEmployees(List<Integer> empIds) throws FileNotFoundException, ClassNotFoundException, SQLException, IOException {
@@ -78,12 +78,12 @@ public class EmployeeManagerController {
 		EmployeeService ems=new EmployeeService();
 		List<Employee> employees=ems.getEmployees(allemployeeids);
 		if(employees.size()==countoftotalemployeeids)
-			return new Response<List<Employee>>(200,"fetched details of all records :",employees);
+			return new Response<List<Employee>>(StatusCode.SUCCESS,"fetched details of all records :",employees);
 		else if(employees.size()==0) {
-			return new Response<List<Employee>>(400,"couldnt fetch any of the records ");
+			return new Response<List<Employee>>(StatusCode.FAILURE,"couldnt fetch any of the records ");
 		}
 		else {
-		    return new Response<List<Employee>>(206,"empIds for "+(countoftotalemployeeids-employees.size())+" employee(s) not found ",employees);
+		    return new Response<List<Employee>>(StatusCode.PARTIAL_SUCCESS,"empIds for "+(countoftotalemployeeids-employees.size())+" employee(s) not found ",employees);
 		}		
 	}
 }
