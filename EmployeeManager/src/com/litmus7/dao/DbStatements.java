@@ -1,4 +1,4 @@
-package com.litmus7.databaseaccess;
+package com.litmus7.dao;
 
 public class DbStatements {
 	
@@ -9,4 +9,5 @@ public class DbStatements {
 	public static final String getemployeesbydeptsql="select emp_id from employee where department=?";
 	public static final String showemployeessql="select * from employee where emp_id=?";
 	public static final String showallemployeessql="select * from employee";
+	public static final String checkifexists="select count(*) from employee where emp_id=?";
 }

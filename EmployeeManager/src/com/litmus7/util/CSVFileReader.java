@@ -1,4 +1,4 @@
-package com.litmus7.utils;
+package com.litmus7.util;
 
 import com.litmus7.employeemodel.Employee;
 
@@ -24,9 +24,6 @@ public class CSVFileReader {
 	
 	try{
     	
-	
-		
-		
 		String line;
 		
 		//extracting values from csv for each line
@@ -52,12 +49,8 @@ public class CSVFileReader {
 	}
 	
 	catch(IOException e) {
-		System.out.println(e.getMessage());
+		return null;
 		}
 	
-	return null;
-	
 	}	
-	
-	
 }

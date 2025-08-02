@@ -1,7 +1,5 @@
 package com.litmus7.employeemodel;
 
-import java.sql.Date;
-
 public class Employee {
 	
 	

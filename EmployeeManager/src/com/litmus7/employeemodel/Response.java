@@ -1,36 +1,30 @@
 package com.litmus7.employeemodel;
 
-public class Response {
+public class Response<T> {
 	
-	public boolean success;
+	public int statuscode;
 	public String message;
+	public T data;
 	public int count;
 	public boolean hascount=false;
 	
-	@Override
-	public String toString() {
-		if(!hascount)
-			return message;
-		else
-			return message+""+count;
-	}
-	
-	public Response(boolean suc,String mes) {
-		this.success=suc;
+	public Response(int suc,String mes,T data) {
+		this.statuscode=suc;
 		this.message=mes;
-		
+		this.data=data;
 	}
-	
-	public Response(boolean suc,String mes,int cnt) {
-		this.success=suc;
+	public Response(int suc,String mes,T data,int cnt) {
+		this.statuscode=suc;
 		this.message=mes;
+		this.data=data;
 		this.count=cnt;
 		this.hascount=true;
 	}
-
-	
-	
-	
-	
-
+	public Response(int suc,String mes) {
+		this.statuscode=suc;
+		this.message=mes;
+	}
+	public Response(int suc) {
+		this.statuscode=suc;
+	}
 }

@@ -1,4 +1,4 @@
-package com.litmus7.utils;
+package com.litmus7.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
