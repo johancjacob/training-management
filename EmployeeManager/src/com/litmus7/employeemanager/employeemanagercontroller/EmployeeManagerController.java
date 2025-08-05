@@ -1,7 +1,5 @@
 package com.litmus7.employeemanager.employeemanagercontroller;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +13,7 @@ import com.litmus7.employeemanager.util.DataValidator;
 
 public class EmployeeManagerController {
 	
-	public Response<Employee> saveEmployee(Employee emp) throws FileNotFoundException, ClassNotFoundException, SQLException, IOException,EmployeeException {
+	public Response<Employee> saveEmployee(Employee emp){
 		try {
 			if(emp.firstName==null || emp.lastName==null || emp.email==null ||emp.joinDate==null)
 				return new Response(StatusCode.FAILURE,"missing values for "+emp.empId);
@@ -33,7 +31,7 @@ public class EmployeeManagerController {
 		}
 	}
 	
-	public Response<List<Employee>> saveEmployeesFromCSV(String file) throws ClassNotFoundException, SQLException,IOException {
+	public Response<List<Employee>> saveEmployeesFromCSV(String file){
 		try {
 			if(file.endsWith(".csv")) {
 				List<Employee> totalemployees=CSVFileReader.readCSV(file);
@@ -55,7 +53,7 @@ public class EmployeeManagerController {
 		}
 	}
 	
-	public Response deleteEmployee(int empId) throws ClassNotFoundException,SQLException,IOException {
+	public Response deleteEmployee(int empId){
 		
 		try {
 			if(DataValidator.isValidEmpId(empId)) {
@@ -73,7 +71,7 @@ public class EmployeeManagerController {
 		}
 	}
 	
-	public Response updateEmployeeSalary(int empId,int salary) throws FileNotFoundException, ClassNotFoundException, SQLException, IOException {
+	public Response updateEmployeeSalary(int empId,int salary){
 		
 		try {
 			if(DataValidator.isValidEmpId(empId)) {
@@ -91,7 +89,7 @@ public class EmployeeManagerController {
 		}
 	}
 	
-	public Response<List<Employee>> getEmployees(List<Integer> empIds) throws FileNotFoundException, ClassNotFoundException, SQLException, IOException {
+	public Response<List<Employee>> getEmployees(List<Integer> empIds) {
 		
 		try {
 			List<Integer> allemployeeids=new ArrayList<>(empIds);
@@ -112,7 +110,7 @@ public class EmployeeManagerController {
 		}
 	}
 	
-	public Response<List<Employee>> getEmployeesByDept(String dept) throws FileNotFoundException, ClassNotFoundException, SQLException, IOException{
+	public Response<List<Employee>> getEmployeesByDept(String dept){
 		
 		try {
 			if(DataValidator.isValidDepartment(dept)) {

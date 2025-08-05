@@ -7,13 +7,12 @@ import java.util.Properties;
 
 import com.litmus7.employeemanager.exception.EmployeeException;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class DbConnection {
 	
-	public static Connection getConnection() throws ClassNotFoundException,EmployeeException{    //connection method
+	public static Connection getConnection() throws EmployeeException{    //connection method
 	 Properties props=new Properties();
 	 
      try(InputStream input=DbConnection.class.getClassLoader().getResourceAsStream("dbconfig.properties")) { 
@@ -32,7 +31,7 @@ public class DbConnection {
     	 throw new EmployeeException("couldnt find properties file for Db connection",e);
      }
      catch(SQLException e) {
-    	 throw new EmployeeException("couldnt connect to db",e);
+    	 throw new EmployeeException("couldnt connect to db due to invalid credentials",e);
      }
    }
 }

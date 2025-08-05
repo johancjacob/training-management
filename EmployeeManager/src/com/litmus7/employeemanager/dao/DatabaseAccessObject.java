@@ -1,14 +1,11 @@
 package com.litmus7.employeemanager.dao;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +17,7 @@ import com.litmus7.employeemanager.util.DbConnection;
 
 public class DatabaseAccessObject {
 	
-	public boolean saveEmployee(Employee employee) throws FileNotFoundException, ClassNotFoundException, IOException, EmployeeException {
+	public boolean saveEmployee(Employee employee) throws EmployeeException {
 		
 		try(Connection conn=DbConnection.getConnection()) {
 			PreparedStatement pstmt=conn.prepareStatement(DbStatements.insertsql);
@@ -42,7 +39,7 @@ public class DatabaseAccessObject {
 		}
 	}
 	
-	public boolean deleteEmployee(int empId) throws ClassNotFoundException, IOException,EmployeeException{
+	public boolean deleteEmployee(int empId) throws EmployeeException{
 		try(Connection conn=DbConnection.getConnection()){
 			PreparedStatement pstmt=conn.prepareStatement(DbStatements.deletesql);
 	
@@ -55,7 +52,7 @@ public class DatabaseAccessObject {
 		}
 	}
 	
-	public boolean updateEmployeeSalary(int empId,int salary) throws ClassNotFoundException, IOException, EmployeeException {
+	public boolean updateEmployeeSalary(int empId,int salary) throws EmployeeException {
 		try(Connection conn=DbConnection.getConnection()){
 			PreparedStatement pstmt=conn.prepareStatement(DbStatements.updateemployeesalarysql);
 			
@@ -69,25 +66,25 @@ public class DatabaseAccessObject {
 		}
 	}
 	
-	public boolean checkIfExists(int empId) throws FileNotFoundException, ClassNotFoundException, IOException, EmployeeException {					
+	public boolean checkIfExists(int empId) throws EmployeeException {					
 		try(Connection conn=DbConnection.getConnection()){
-		PreparedStatement checkstmt=conn.prepareStatement(DbStatements.checkifexists);
-		checkstmt.setInt(1, empId);
-		ResultSet rs=checkstmt.executeQuery();
-		rs.next();
-		int exists=rs.getInt(1);
-		
-		if(exists==1)
-			return true;
-		else
-			return false;
+			PreparedStatement checkstmt=conn.prepareStatement(DbStatements.checkifexists);
+			checkstmt.setInt(1, empId);
+			ResultSet rs=checkstmt.executeQuery();
+			rs.next();
+			int exists=rs.getInt(1);
+			
+			if(exists==1)
+				return true;
+			else
+				return false;
 		}
 		catch(SQLException e) {
 			throw new EmployeeException("error in sql operation",e);
 		}
 	}
 	
-	public List<Employee> getEmployees(List<Integer> validemployeeids) throws FileNotFoundException, ClassNotFoundException, IOException, EmployeeException{
+	public List<Employee> getEmployees(List<Integer> validemployeeids) throws EmployeeException{
 		try(Connection conn=DbConnection.getConnection()){
 			List<Employee> employees=new ArrayList<>();
 			PreparedStatement pstmt=conn.prepareStatement(DbStatements.showemployeessql);
@@ -107,7 +104,7 @@ public class DatabaseAccessObject {
 		}
     }
 	
-	public List<Employee> getEmployeesByDept(String dept) throws FileNotFoundException, ClassNotFoundException, SQLException, IOException, EmployeeException{
+	public List<Employee> getEmployeesByDept(String dept) throws EmployeeException{
 		try(Connection conn=DbConnection.getConnection()){
 			List<Employee> employees=new ArrayList<>();
 			CallableStatement cstmt=conn.prepareCall("{call get_employees_by_dept(?,?)}");

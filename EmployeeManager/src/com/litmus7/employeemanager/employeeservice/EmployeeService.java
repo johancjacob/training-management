@@ -5,9 +5,6 @@ import com.litmus7.employeemanager.employeemodel.Employee;
 import com.litmus7.employeemanager.exception.EmployeeException;
 import com.litmus7.employeemanager.util.DataValidator;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -38,7 +35,7 @@ public class EmployeeService {
 	    	return true;
 	    }
 	    
-	   public Employee saveEmployee(Employee emp) throws SQLException, FileNotFoundException, IOException, ClassNotFoundException, EmployeeException {
+	   public Employee saveEmployee(Employee emp) throws EmployeeException {
 		   
 		   DatabaseAccessObject dao=new DatabaseAccessObject();
 	       if(isValidEmployee(emp) && !dao.checkIfExists(emp.empId)) {
@@ -49,7 +46,7 @@ public class EmployeeService {
 	    	return null;
 	    }
 	    		
-	   public List<Employee> saveEmployeesFromCSV(List<Employee> employees) throws  FileNotFoundException, IOException, ClassNotFoundException,EmployeeException {
+	   public List<Employee> saveEmployeesFromCSV(List<Employee> employees) throws EmployeeException {
 	    	
 		    DatabaseAccessObject dao=new DatabaseAccessObject();
 	    	areValidEmployees(employees);
@@ -66,7 +63,7 @@ public class EmployeeService {
 	    	return employees;
 	    }
 	    
-	  public boolean deleteEmployee(int empId) throws SQLException, FileNotFoundException, IOException, ClassNotFoundException, EmployeeException {
+	  public boolean deleteEmployee(int empId) throws EmployeeException {
 	    	
 	    	DatabaseAccessObject dao=new DatabaseAccessObject();
 	    	if(dao.checkIfExists(empId)) {
@@ -76,7 +73,7 @@ public class EmployeeService {
 	    		return false;
 	    }
 	    
-	  public boolean updateEmployeeSalary(int empId,int salary) throws SQLException, FileNotFoundException, IOException, ClassNotFoundException, EmployeeException{
+	  public boolean updateEmployeeSalary(int empId,int salary) throws EmployeeException{
 	    	
 	    	DatabaseAccessObject dao=new DatabaseAccessObject();
 	    	if(dao.checkIfExists(empId)) {
@@ -86,7 +83,7 @@ public class EmployeeService {
 	    		return false;
 	    }
 	    
-	  public List<Employee> getEmployees(List<Integer> allemployeeids) throws SQLException, FileNotFoundException, IOException, ClassNotFoundException,EmployeeException {
+	  public List<Employee> getEmployees(List<Integer> allemployeeids) throws EmployeeException {
 	    	
 	    	DatabaseAccessObject dao=new DatabaseAccessObject();
 	    	List<Integer> validemployeeids=new ArrayList<Integer>();
@@ -98,7 +95,7 @@ public class EmployeeService {
 			return dao.getEmployees(validemployeeids);
 	  }
 	  
-	  public List<Employee> getEmployeesByDept(String dept) throws FileNotFoundException, ClassNotFoundException, SQLException, IOException, EmployeeException{
+	  public List<Employee> getEmployeesByDept(String dept) throws EmployeeException{
 		  
 		  DatabaseAccessObject dao=new DatabaseAccessObject();
 		  return dao.getEmployeesByDept(dept);
