@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.litmus7.employeemanager.employeemodel.Employee;
+import com.litmus7.employeemanager.exception.EmployeeException;
 
 public class CSVFileReader {
 	static FileReader fr;
@@ -15,14 +16,15 @@ public class CSVFileReader {
 	
 	
 	
-	public static List<Employee> readCSV(String file) throws FileNotFoundException {
-	fr=new FileReader(file);
-	br=new BufferedReader(fr);
+	public static List<Employee> readCSV(String file) throws EmployeeException {
+	
 	
 	List<Employee> emps=new ArrayList<>();
 	
 	
 	try{
+		fr=new FileReader(file);
+		br=new BufferedReader(fr);
     	
 		String line;
 		
@@ -49,8 +51,7 @@ public class CSVFileReader {
 	}
 	
 	catch(IOException e) {
-		return null;
+		throw new EmployeeException("file not found",e);
 		}
-	
 	}	
 }
