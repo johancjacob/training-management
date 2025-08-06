@@ -1,8 +1,8 @@
 package com.litmus7.employeemanager.employeeservice;
 
-import com.litmus7.employeemanager.dao.DatabaseAccessObject;
+import com.litmus7.employeemanager.dao.EmployeeDao;
 import com.litmus7.employeemanager.employeemodel.Employee;
-import com.litmus7.employeemanager.exception.EmployeeException;
+import com.litmus7.employeemanager.exception.EmployeeApplicationException;
 import com.litmus7.employeemanager.util.DataValidator;
 
 import java.util.ArrayList;
@@ -10,9 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 
 
-
-
 public class EmployeeService {
+		EmployeeDao dao=new EmployeeDao();
 	
 	    public boolean isValidEmployee(Employee emp){
 	    	if(DataValidator.isValidEmpId(emp.empId) && DataValidator.isValidEmail(emp.email) && DataValidator.isValidDepartment(emp.dept) && DataValidator.isValidDate(emp.joinDate)){
@@ -34,8 +33,7 @@ public class EmployeeService {
 	    	return true;
 	    }
 	    
-	   public Employee saveEmployee(Employee emp) throws EmployeeException {
-		   DatabaseAccessObject dao=new DatabaseAccessObject();
+	   public Employee saveEmployee(Employee emp) throws EmployeeApplicationException {
 	       if(isValidEmployee(emp) && !dao.checkIfExists(emp.empId)) {
 	    		dao.saveEmployee(emp);
 	    		return emp;
@@ -44,8 +42,7 @@ public class EmployeeService {
 	    	return null;
 	    }
 	    		
-	   public List<Employee> saveEmployeesFromCSV(List<Employee> employees) throws EmployeeException {
-	        DatabaseAccessObject dao=new DatabaseAccessObject();
+	   public List<Employee> saveEmployeesFromCSV(List<Employee> employees) throws EmployeeApplicationException {
 	    	areValidEmployees(employees);
 	    	Iterator<Employee> iterator=employees.iterator();
 	    	while(iterator.hasNext()){
@@ -60,8 +57,7 @@ public class EmployeeService {
 	    	return employees;
 	    }
 	   
-	   public List<Employee> getEmployeesById(List<Integer> allemployeeids) throws EmployeeException {
-	    	DatabaseAccessObject dao=new DatabaseAccessObject();
+	   public List<Employee> getEmployeesById(List<Integer> allemployeeids) throws EmployeeApplicationException {
 	    	List<Integer> validemployeeids=new ArrayList<Integer>();
 			for(Integer empId:allemployeeids) {
 				if(dao.checkIfExists(empId)) {
@@ -71,20 +67,18 @@ public class EmployeeService {
 			return dao.getEmployeesById(validemployeeids);
 	  }
 	   
-	  public int updateEmployee(Employee emp) throws EmployeeException{
-		    DatabaseAccessObject dao=new DatabaseAccessObject();
+	  public boolean updateEmployee(Employee emp) throws EmployeeApplicationException{
 		    if(isValidEmployee(emp) && dao.checkIfExists(emp.empId)) {
 		    	dao.updateEmployee(emp);
-		    	return 1;
+		    	return true;
 		    }
 		    else if(!isValidEmployee(emp))
-		    	return 2;
+		    	throw new EmployeeApplicationException("Invalid employee data");
 		    else
-		    	return 3;
+		    	throw new EmployeeApplicationException("empId "+emp.empId+" does'nt exist in db");
 	  }
 	    
-	  public boolean deleteEmployeeById(int empId) throws EmployeeException {
-	    	DatabaseAccessObject dao=new DatabaseAccessObject();
+	  public boolean deleteEmployeeById(int empId) throws EmployeeApplicationException {
 	    	if(dao.checkIfExists(empId)) {
 	    		return dao.deleteEmployeeById(empId);
 	    	}
@@ -92,8 +86,7 @@ public class EmployeeService {
 	    		return false;
 	    }
 	    
-	  public boolean updateEmployeeSalaryById(int empId,int salary) throws EmployeeException{
-	    	DatabaseAccessObject dao=new DatabaseAccessObject();
+	  public boolean updateEmployeeSalaryById(int empId,int salary) throws EmployeeApplicationException{
 	    	if(dao.checkIfExists(empId)) {
 	    		return dao.updateEmployeeSalaryById(empId, salary);
 	    	}
@@ -101,8 +94,7 @@ public class EmployeeService {
 	    		return false;
 	    }
 	  
-	  public List<Employee> getEmployeesByDept(String dept) throws EmployeeException{
-		  DatabaseAccessObject dao=new DatabaseAccessObject();
+	  public List<Employee> getEmployeesByDept(String dept) throws EmployeeApplicationException{
 		  return dao.getEmployeesByDept(dept);
 	  }
 }

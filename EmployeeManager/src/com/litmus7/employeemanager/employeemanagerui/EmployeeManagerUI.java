@@ -3,17 +3,16 @@ package com.litmus7.employeemanager.employeemanagerui;
 import com.litmus7.employeemanager.employeemanagercontroller.EmployeeManagerController;
 import com.litmus7.employeemanager.employeemodel.Employee;
 import com.litmus7.employeemanager.employeemodel.Response;
-import com.litmus7.employeemanager.exception.EmployeeException;
+import com.litmus7.employeemanager.exception.EmployeeApplicationException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 
-
 public class EmployeeManagerUI {
 	
-	public static void main(String[] args) throws SQLException, FileNotFoundException, IOException, ClassNotFoundException, EmployeeException{
+	public static void main(String[] args) throws SQLException, FileNotFoundException, IOException, ClassNotFoundException, EmployeeApplicationException{
 		
 			String file="employee.csv";
 			Response<?> res;

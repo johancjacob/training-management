@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.litmus7.employeemanager.employeemodel.Employee;
-import com.litmus7.employeemanager.exception.EmployeeException;
+import com.litmus7.employeemanager.exception.EmployeeApplicationException;
 
 public class CSVFileReader {
 	static FileReader fr;
@@ -15,7 +15,7 @@ public class CSVFileReader {
 	
 	
 	
-	public static List<Employee> readCSV(String file) throws EmployeeException {
+	public static List<Employee> readCSV(String file) throws EmployeeApplicationException {
 	
 	
 	List<Employee> emps=new ArrayList<>();
@@ -50,7 +50,7 @@ public class CSVFileReader {
 	}
 	
 	catch(IOException e) {
-		throw new EmployeeException("file not found",e);
+		throw new EmployeeApplicationException("file not found",e);
 		}
 	}	
 }

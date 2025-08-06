@@ -10,17 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.litmus7.employeemanager.employeemodel.Employee;
-import com.litmus7.employeemanager.exception.EmployeeException;
+import com.litmus7.employeemanager.exception.EmployeeApplicationException;
 import com.litmus7.employeemanager.util.DbConnection;
 
 
 
-public class DatabaseAccessObject {
+public class EmployeeDao {
 	
-	public boolean saveEmployee(Employee employee) throws EmployeeException {
+	public boolean saveEmployee(Employee employee) throws EmployeeApplicationException {
 		
 		try(Connection conn=DbConnection.getConnection()) {
-			PreparedStatement pstmt=conn.prepareStatement(DbStatements.insertsql);
+			PreparedStatement pstmt=conn.prepareStatement(SqlConstants.INSERT_EMPLOYEE_QUERY);
 			
 			pstmt.setInt(1,employee.empId);
 			pstmt.setString(2,employee.firstName);
@@ -35,33 +35,32 @@ public class DatabaseAccessObject {
 			return true;
 	   }
 		catch(SQLException e) {
-			throw new EmployeeException("error in sql operation",e);
+			throw new EmployeeApplicationException("error in sql operation",e);
 		}
 	}
 	
-	public List<Employee> getEmployeesById(List<Integer> validemployeeids) throws EmployeeException{
+	public List<Employee> getEmployeesById(List<Integer> employeeids) throws EmployeeApplicationException{
 		try(Connection conn=DbConnection.getConnection()){
 			List<Employee> employees=new ArrayList<>();
-			PreparedStatement pstmt=conn.prepareStatement(DbStatements.showemployeessql);
-			int empId=-1;
-			for(int id:validemployeeids) {
-					empId=id;
-					pstmt.setInt(1, empId);
+			PreparedStatement pstmt=conn.prepareStatement(SqlConstants.GET_EMPLOYEE_BY_ID_QUERY);
+			for(int id:employeeids) {
+					pstmt.setInt(1, id);
 					ResultSet rs=pstmt.executeQuery();
-					rs.next();
-					Employee employee=new Employee(rs.getInt("emp_id"),rs.getString("first_name"),rs.getString("last_name"),rs.getString("email"),rs.getString("phone"),rs.getString("department"),rs.getInt("salary"),rs.getString("join_date"));
-					employees.add(employee);
+					if(rs.next()) {
+						Employee employee=new Employee(rs.getInt("emp_id"),rs.getString("first_name"),rs.getString("last_name"),rs.getString("email"),rs.getString("phone"),rs.getString("department"),rs.getInt("salary"),rs.getString("join_date"));
+						employees.add(employee);
+					}
 			}
 				return employees;
 		}
 		catch(SQLException e) {
-			throw new EmployeeException("error in sql operation",e);
+			throw new EmployeeApplicationException("error in sql operation",e);
 		}
     }
 	
-	public boolean updateEmployee(Employee emp) throws EmployeeException {
+	public boolean updateEmployee(Employee emp) throws EmployeeApplicationException {
 		try(Connection conn=DbConnection.getConnection()){
-			PreparedStatement pstmt=conn.prepareStatement(DbStatements.updateemployeesql);
+			PreparedStatement pstmt=conn.prepareStatement(SqlConstants.UPDATE_EMPLOYEE_QUERY);
 			
 			pstmt.setString(1,emp.firstName);
 			pstmt.setString(2,emp.lastName);
@@ -76,26 +75,26 @@ public class DatabaseAccessObject {
 			
 		}
 		catch(SQLException e) {
-			throw new EmployeeException("error in sql operation",e);
+			throw new EmployeeApplicationException("error in sql operation",e);
 		}
 	}
 	
-	public boolean deleteEmployeeById(int empId) throws EmployeeException{
+	public boolean deleteEmployeeById(int empId) throws EmployeeApplicationException{
 		try(Connection conn=DbConnection.getConnection()){
-			PreparedStatement pstmt=conn.prepareStatement(DbStatements.deletesql);
+			PreparedStatement pstmt=conn.prepareStatement(SqlConstants.DELETE_EMPLOYEE_BY_ID_QUERY);
 	
 			pstmt.setInt(1,empId);
 			pstmt.executeUpdate();		
 			return true;
 		}
 		catch(SQLException e) {
-			throw new EmployeeException("error in sql operation",e);
+			throw new EmployeeApplicationException("error in sql operation",e);
 		}
 	}
 	
-	public boolean updateEmployeeSalaryById(int empId,int salary) throws EmployeeException {
+	public boolean updateEmployeeSalaryById(int empId,int salary) throws EmployeeApplicationException {
 		try(Connection conn=DbConnection.getConnection()){
-			PreparedStatement pstmt=conn.prepareStatement(DbStatements.updateemployeesalarysql);
+			PreparedStatement pstmt=conn.prepareStatement(SqlConstants.UPDATE_EMPLOYEE_SALARY_BY_ID_QUERY);
 			
 			pstmt.setInt(1,salary);
 			pstmt.setInt(2,empId);
@@ -103,11 +102,11 @@ public class DatabaseAccessObject {
 			return true;
 		}
 		catch(SQLException e) {
-			throw new EmployeeException("error in sql operation",e);
+			throw new EmployeeApplicationException("error in sql operation",e);
 		}
 	}
 	
-	public List<Employee> getEmployeesByDept(String dept) throws EmployeeException{
+	public List<Employee> getEmployeesByDept(String dept) throws EmployeeApplicationException{
 		try(Connection conn=DbConnection.getConnection()){
 			List<Employee> employees=new ArrayList<>();
 			CallableStatement cstmt=conn.prepareCall("{call get_employees_by_dept(?,?)}");
@@ -120,13 +119,13 @@ public class DatabaseAccessObject {
 			return employees;
 		}
 		catch(SQLException e) {
-			throw new EmployeeException("error in sql operation",e);
+			throw new EmployeeApplicationException("error in sql operation",e);
 		}
 	}
 	
-	public boolean checkIfExists(int empId) throws EmployeeException {					
+	public boolean checkIfExists(int empId) throws EmployeeApplicationException {					
 		try(Connection conn=DbConnection.getConnection()){
-			PreparedStatement checkstmt=conn.prepareStatement(DbStatements.checkifexists);
+			PreparedStatement checkstmt=conn.prepareStatement(SqlConstants.CHECK_IF_EMPLOYEE_EXISTS_BY_ID_QUERY);
 			checkstmt.setInt(1, empId);
 			ResultSet rs=checkstmt.executeQuery();
 			rs.next();
@@ -138,7 +137,7 @@ public class DatabaseAccessObject {
 				return false;
 		}
 		catch(SQLException e) {
-			throw new EmployeeException("error in sql operation",e);
+			throw new EmployeeApplicationException("error in sql operation",e);
 		}
 	}
 }
