@@ -39,11 +39,11 @@ public class EmployeeManagerController {
 				EmployeeService ems=new EmployeeService();
 				List<Employee> employees=ems.saveEmployeesFromCSV(totalemployees);
 				if(employees.size()==countoftotalemployees)
-					return new Response<List<Employee>>(StatusCode.SUCCESS,"all "+employees.size()+" employees saved",employees,employees.size());
+					return new Response<List<Employee>>(StatusCode.SUCCESS,"all "+employees.size()+" employees in csv saved",employees,employees.size());
 				else if(employees.size()==0)
-					return new Response(StatusCode.FAILURE,"couldnt save any of the employees");
+					return new Response(StatusCode.FAILURE,"couldnt save any of the employees in csv");
 				else
-					return new Response<List<Employee>>(StatusCode.PARTIAL_SUCCESS,"saved "+employees.size()+" employee(s)"+" out of "+countoftotalemployees,employees,employees.size());
+					return new Response<List<Employee>>(StatusCode.PARTIAL_SUCCESS,"saved "+employees.size()+" employee(s)"+" out of the "+countoftotalemployees+" records in the csv",employees,employees.size());
 			}
 			else
 				return new Response<List<Employee>>(StatusCode.FAILURE,"not a csv file");
@@ -53,49 +53,12 @@ public class EmployeeManagerController {
 		}
 	}
 	
-	public Response deleteEmployee(int empId){
-		
-		try {
-			if(DataValidator.isValidEmpId(empId)) {
-				EmployeeService ems=new EmployeeService();
-				if(ems.deleteEmployee(empId))
-					return new Response(StatusCode.SUCCESS,"successfully deleted the record for "+empId);
-				else
-					return new Response(StatusCode.FAILURE,"empId "+empId+" doesnt exist in db");
-			}
-			else
-				return new Response(StatusCode.FAILURE,"invalid empId");
-		}
-		catch(EmployeeException e) {
-			return new Response(StatusCode.FAILURE,e.getMessage());
-		}
-	}
-	
-	public Response updateEmployeeSalary(int empId,int salary){
-		
-		try {
-			if(DataValidator.isValidEmpId(empId)) {
-				EmployeeService ems=new EmployeeService();
-				if(ems.updateEmployeeSalary(empId, salary))
-					return new Response(StatusCode.SUCCESS,"successfully updated salary for "+empId);
-				else
-					return new Response(StatusCode.FAILURE,"record for "+empId+" doesnt exist");
-			}
-			else
-				return new Response(StatusCode.FAILURE,"not a valid empId");
-		}
-		catch(EmployeeException e) {
-			return new Response(StatusCode.FAILURE,e.getMessage());
-		}
-	}
-	
-	public Response<List<Employee>> getEmployees(List<Integer> empIds) {
-		
+	public Response<List<Employee>> getEmployeesById(List<Integer> empIds) {
 		try {
 			List<Integer> allemployeeids=new ArrayList<>(empIds);
 			int countoftotalemployeeids=allemployeeids.size();
 			EmployeeService ems=new EmployeeService();
-			List<Employee> employees=ems.getEmployees(allemployeeids);
+			List<Employee> employees=ems.getEmployeesById(allemployeeids);
 			if(employees.size()==countoftotalemployeeids)
 				return new Response<List<Employee>>(StatusCode.SUCCESS,"fetched details of all records :",employees);
 			else if(employees.size()==0) {
@@ -110,8 +73,60 @@ public class EmployeeManagerController {
 		}
 	}
 	
+	public Response updateEmployee(Employee emp){
+		try {
+			if(DataValidator.isValidEmpId(emp.empId)) {
+				EmployeeService ems=new EmployeeService();
+				if(ems.updateEmployee(emp)==1)
+					return new Response(StatusCode.SUCCESS,"successfully updated the employee record for "+emp.empId);
+				else if(ems.updateEmployee(emp)==2)
+					return new Response(StatusCode.FAILURE,"invalid employee data");
+				else
+					return new Response(StatusCode.FAILURE,"empId "+emp.empId+" doesnt exist in db");
+			}
+			else
+				return new Response(StatusCode.FAILURE,"invalid empId");
+		}
+		catch(EmployeeException e) {
+			return new Response(StatusCode.FAILURE,e.getMessage());
+		}
+	}
+	
+	public Response deleteEmployeeById(int empId){
+		try {
+			if(DataValidator.isValidEmpId(empId)) {
+				EmployeeService ems=new EmployeeService();
+				if(ems.deleteEmployeeById(empId))
+					return new Response(StatusCode.SUCCESS,"successfully deleted the record for "+empId);
+				else
+					return new Response(StatusCode.FAILURE,"empId "+empId+" doesnt exist in db");
+			}
+			else
+				return new Response(StatusCode.FAILURE,"invalid empId");
+		}
+		catch(EmployeeException e) {
+			return new Response(StatusCode.FAILURE,e.getMessage());
+		}
+	}
+	
+	public Response updateEmployeeSalaryById(int empId,int salary){
+		try {
+			if(DataValidator.isValidEmpId(empId)) {
+				EmployeeService ems=new EmployeeService();
+				if(ems.updateEmployeeSalaryById(empId, salary))
+					return new Response(StatusCode.SUCCESS,"successfully updated salary for "+empId);
+				else
+					return new Response(StatusCode.FAILURE,"record for "+empId+" doesnt exist");
+			}
+			else
+				return new Response(StatusCode.FAILURE,"invalid empId");
+		}
+		catch(EmployeeException e) {
+			return new Response(StatusCode.FAILURE,e.getMessage());
+		}
+	}
+	
 	public Response<List<Employee>> getEmployeesByDept(String dept){
-		
 		try {
 			if(DataValidator.isValidDepartment(dept)) {
 				EmployeeService ems=new  EmployeeService();

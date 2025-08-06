@@ -10,4 +10,5 @@ public class DbStatements {
 	public static final String showemployeessql="select * from employee where emp_id=?";
 	public static final String showallemployeessql="select * from employee";
 	public static final String checkifexists="select count(*) from employee where emp_id=?";
+	public static final String updateemployeesql="update employee set first_name=?,last_name=?,email=?,phone=?,department=?,salary=?,join_date=? where emp_id=?";
 }

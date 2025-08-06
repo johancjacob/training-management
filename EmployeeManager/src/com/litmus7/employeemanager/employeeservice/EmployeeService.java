@@ -15,14 +15,13 @@ import java.util.List;
 public class EmployeeService {
 	
 	    public boolean isValidEmployee(Employee emp){
-	    	
 	    	if(DataValidator.isValidEmpId(emp.empId) && DataValidator.isValidEmail(emp.email) && DataValidator.isValidDepartment(emp.dept) && DataValidator.isValidDate(emp.joinDate)){
 	    		return true;
 	    	}
 	    	return false;
 	    }
+	    
 	    public boolean areValidEmployees(List<Employee> emps) {
-	    	
 	    	Iterator<Employee> iterator=emps.iterator();	    	
 	    	while(iterator.hasNext()){
 	    		Employee emp=iterator.next();
@@ -36,7 +35,6 @@ public class EmployeeService {
 	    }
 	    
 	   public Employee saveEmployee(Employee emp) throws EmployeeException {
-		   
 		   DatabaseAccessObject dao=new DatabaseAccessObject();
 	       if(isValidEmployee(emp) && !dao.checkIfExists(emp.empId)) {
 	    		dao.saveEmployee(emp);
@@ -47,8 +45,7 @@ public class EmployeeService {
 	    }
 	    		
 	   public List<Employee> saveEmployeesFromCSV(List<Employee> employees) throws EmployeeException {
-	    	
-		    DatabaseAccessObject dao=new DatabaseAccessObject();
+	        DatabaseAccessObject dao=new DatabaseAccessObject();
 	    	areValidEmployees(employees);
 	    	Iterator<Employee> iterator=employees.iterator();
 	    	while(iterator.hasNext()){
@@ -62,29 +59,8 @@ public class EmployeeService {
 	    	}
 	    	return employees;
 	    }
-	    
-	  public boolean deleteEmployee(int empId) throws EmployeeException {
-	    	
-	    	DatabaseAccessObject dao=new DatabaseAccessObject();
-	    	if(dao.checkIfExists(empId)) {
-	    		return dao.deleteEmployee(empId);
-	    	}
-	    	else
-	    		return false;
-	    }
-	    
-	  public boolean updateEmployeeSalary(int empId,int salary) throws EmployeeException{
-	    	
-	    	DatabaseAccessObject dao=new DatabaseAccessObject();
-	    	if(dao.checkIfExists(empId)) {
-	    		return dao.updateEmployeeSalary(empId, salary);
-	    	}
-	    	else
-	    		return false;
-	    }
-	    
-	  public List<Employee> getEmployees(List<Integer> allemployeeids) throws EmployeeException {
-	    	
+	   
+	   public List<Employee> getEmployeesById(List<Integer> allemployeeids) throws EmployeeException {
 	    	DatabaseAccessObject dao=new DatabaseAccessObject();
 	    	List<Integer> validemployeeids=new ArrayList<Integer>();
 			for(Integer empId:allemployeeids) {
@@ -92,11 +68,40 @@ public class EmployeeService {
 					validemployeeids.add(empId);
 				}
 			}
-			return dao.getEmployees(validemployeeids);
+			return dao.getEmployeesById(validemployeeids);
 	  }
+	   
+	  public int updateEmployee(Employee emp) throws EmployeeException{
+		    DatabaseAccessObject dao=new DatabaseAccessObject();
+		    if(isValidEmployee(emp) && dao.checkIfExists(emp.empId)) {
+		    	dao.updateEmployee(emp);
+		    	return 1;
+		    }
+		    else if(!isValidEmployee(emp))
+		    	return 2;
+		    else
+		    	return 3;
+	  }
+	    
+	  public boolean deleteEmployeeById(int empId) throws EmployeeException {
+	    	DatabaseAccessObject dao=new DatabaseAccessObject();
+	    	if(dao.checkIfExists(empId)) {
+	    		return dao.deleteEmployeeById(empId);
+	    	}
+	    	else
+	    		return false;
+	    }
+	    
+	  public boolean updateEmployeeSalaryById(int empId,int salary) throws EmployeeException{
+	    	DatabaseAccessObject dao=new DatabaseAccessObject();
+	    	if(dao.checkIfExists(empId)) {
+	    		return dao.updateEmployeeSalaryById(empId, salary);
+	    	}
+	    	else
+	    		return false;
+	    }
 	  
 	  public List<Employee> getEmployeesByDept(String dept) throws EmployeeException{
-		  
 		  DatabaseAccessObject dao=new DatabaseAccessObject();
 		  return dao.getEmployeesByDept(dept);
 	  }

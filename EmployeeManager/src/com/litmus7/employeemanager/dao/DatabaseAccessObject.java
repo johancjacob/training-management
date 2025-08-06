@@ -39,52 +39,7 @@ public class DatabaseAccessObject {
 		}
 	}
 	
-	public boolean deleteEmployee(int empId) throws EmployeeException{
-		try(Connection conn=DbConnection.getConnection()){
-			PreparedStatement pstmt=conn.prepareStatement(DbStatements.deletesql);
-	
-			pstmt.setInt(1,empId);
-			pstmt.executeUpdate();		
-			return true;
-		}
-		catch(SQLException e) {
-			throw new EmployeeException("error in sql operation",e);
-		}
-	}
-	
-	public boolean updateEmployeeSalary(int empId,int salary) throws EmployeeException {
-		try(Connection conn=DbConnection.getConnection()){
-			PreparedStatement pstmt=conn.prepareStatement(DbStatements.updateemployeesalarysql);
-			
-			pstmt.setInt(1,salary);
-			pstmt.setInt(2,empId);
-			pstmt.executeUpdate();			
-			return true;
-		}
-		catch(SQLException e) {
-			throw new EmployeeException("error in sql operation",e);
-		}
-	}
-	
-	public boolean checkIfExists(int empId) throws EmployeeException {					
-		try(Connection conn=DbConnection.getConnection()){
-			PreparedStatement checkstmt=conn.prepareStatement(DbStatements.checkifexists);
-			checkstmt.setInt(1, empId);
-			ResultSet rs=checkstmt.executeQuery();
-			rs.next();
-			int exists=rs.getInt(1);
-			
-			if(exists==1)
-				return true;
-			else
-				return false;
-		}
-		catch(SQLException e) {
-			throw new EmployeeException("error in sql operation",e);
-		}
-	}
-	
-	public List<Employee> getEmployees(List<Integer> validemployeeids) throws EmployeeException{
+	public List<Employee> getEmployeesById(List<Integer> validemployeeids) throws EmployeeException{
 		try(Connection conn=DbConnection.getConnection()){
 			List<Employee> employees=new ArrayList<>();
 			PreparedStatement pstmt=conn.prepareStatement(DbStatements.showemployeessql);
@@ -104,6 +59,54 @@ public class DatabaseAccessObject {
 		}
     }
 	
+	public boolean updateEmployee(Employee emp) throws EmployeeException {
+		try(Connection conn=DbConnection.getConnection()){
+			PreparedStatement pstmt=conn.prepareStatement(DbStatements.updateemployeesql);
+			
+			pstmt.setString(1,emp.firstName);
+			pstmt.setString(2,emp.lastName);
+			pstmt.setString(3,emp.email);
+			pstmt.setString(4,emp.phone);
+			pstmt.setString(5,emp.dept);
+			pstmt.setInt(6,emp.salary);
+			pstmt.setString(7,emp.joinDate);
+			pstmt.setInt(8,emp.empId);
+			pstmt.executeUpdate();
+			return true;
+			
+		}
+		catch(SQLException e) {
+			throw new EmployeeException("error in sql operation",e);
+		}
+	}
+	
+	public boolean deleteEmployeeById(int empId) throws EmployeeException{
+		try(Connection conn=DbConnection.getConnection()){
+			PreparedStatement pstmt=conn.prepareStatement(DbStatements.deletesql);
+	
+			pstmt.setInt(1,empId);
+			pstmt.executeUpdate();		
+			return true;
+		}
+		catch(SQLException e) {
+			throw new EmployeeException("error in sql operation",e);
+		}
+	}
+	
+	public boolean updateEmployeeSalaryById(int empId,int salary) throws EmployeeException {
+		try(Connection conn=DbConnection.getConnection()){
+			PreparedStatement pstmt=conn.prepareStatement(DbStatements.updateemployeesalarysql);
+			
+			pstmt.setInt(1,salary);
+			pstmt.setInt(2,empId);
+			pstmt.executeUpdate();			
+			return true;
+		}
+		catch(SQLException e) {
+			throw new EmployeeException("error in sql operation",e);
+		}
+	}
+	
 	public List<Employee> getEmployeesByDept(String dept) throws EmployeeException{
 		try(Connection conn=DbConnection.getConnection()){
 			List<Employee> employees=new ArrayList<>();
@@ -115,6 +118,24 @@ public class DatabaseAccessObject {
 			    employees.add(employee);
 			}
 			return employees;
+		}
+		catch(SQLException e) {
+			throw new EmployeeException("error in sql operation",e);
+		}
+	}
+	
+	public boolean checkIfExists(int empId) throws EmployeeException {					
+		try(Connection conn=DbConnection.getConnection()){
+			PreparedStatement checkstmt=conn.prepareStatement(DbStatements.checkifexists);
+			checkstmt.setInt(1, empId);
+			ResultSet rs=checkstmt.executeQuery();
+			rs.next();
+			int exists=rs.getInt(1);
+			
+			if(exists==1)
+				return true;
+			else
+				return false;
 		}
 		catch(SQLException e) {
 			throw new EmployeeException("error in sql operation",e);

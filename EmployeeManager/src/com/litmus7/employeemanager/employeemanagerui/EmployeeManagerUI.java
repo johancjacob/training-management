@@ -19,23 +19,27 @@ public class EmployeeManagerUI {
 			Response<?> res;
 			EmployeeManagerController emc=new EmployeeManagerController();
 			
-			res=emc.saveEmployeesFromCSV(file);   				//inserting a list of employees
+			Employee emp1=new Employee(113,"Varun","Kumar","vk@gmail.com","8798567990","Sales",43000,"2023-09-07"); 
+			res=emc.saveEmployee(emp1);								//insert just one employee
 			System.out.println(res.message);
 			
-			Employee emp=new Employee(113,"Varun","Kumar","vk@gmail.com","8798567990","Sales",43000,"2023-09-07"); 
-			res=emc.saveEmployee(emp);						//insert just one employee
+			res=emc.saveEmployeesFromCSV(file);   					//inserting a list of employees from csv
 			System.out.println(res.message);
 			
-			//res=emc.deleteEmployee(103);						//deleting an employee
-			//System.out.println(res.message);
-			
-			res=emc.updateEmployeeSalary(112,14000);  		//to update employee salary
-			System.out.println(res.message);
-			
-			res=emc.getEmployees(Arrays.asList(1090,1100,123,1233,105,108));	//lists the employee record(s) for the given existing empIds
+			res=emc.getEmployeesById(Arrays.asList(1090,1100,123,1233,105,108));	//lists the employee record(s) for the given existing empIds
 			System.out.println(res.message+'\n'+res.data);
 			
-			res=emc.getEmployeesByDept("HR");
+			Employee emp2=new Employee(100,"Johan","Jacob","jcj21@gmail.com","6798346771","Engineering",12000,"2021-09-02");
+			res=emc.updateEmployee(emp2);  							//update the entire employee record for an existing empId	
+			System.out.println(res.message);
+			
+			/*res=emc.deleteEmployeeById(101);						//deleting an employee by empId
+			System.out.println(res.message);*/
+			
+			res=emc.updateEmployeeSalaryById(112,14000);  			//to update employee salary by empId
+			System.out.println(res.message);
+			
+			res=emc.getEmployeesByDept("HR");						//lists the employee record(s) in a given dept.
 			System.out.println(res.message+'\n'+res.data);
 	}
 }
