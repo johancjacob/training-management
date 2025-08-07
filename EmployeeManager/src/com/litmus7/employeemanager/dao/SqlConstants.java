@@ -9,4 +9,5 @@ public class SqlConstants {
 	public static final String GET_ALL_EMPLOYEES_QUERY="select * from employee";
 	public static final String CHECK_IF_EMPLOYEE_EXISTS_BY_ID_QUERY="select count(*) from employee where emp_id=?";
 	public static final String UPDATE_EMPLOYEE_QUERY="update employee set first_name=?,last_name=?,email=?,phone=?,department=?,salary=?,join_date=? where emp_id=?";
+	public static final String UPDATE_EMPLOYEE_DEPT_BY_ID_QUERY="update employee set department=? where emp_id=?";
 }

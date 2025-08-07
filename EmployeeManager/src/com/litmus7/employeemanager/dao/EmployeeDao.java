@@ -140,6 +140,57 @@ public class EmployeeDao {
 			throw new EmployeeApplicationException("error in sql operation",e);
 		}
 	}
+	
+	public int[] addEmployeesInBatch(List<Employee> employees) throws EmployeeApplicationException{
+		try(Connection conn=DbConnection.getConnection()){
+			PreparedStatement pstmt=conn.prepareStatement(SqlConstants.INSERT_EMPLOYEE_QUERY);
+			for(Employee employee:employees) {
+				pstmt.setInt(1,employee.empId);
+				pstmt.setString(2,employee.firstName);
+				pstmt.setString(3,employee.lastName);
+				pstmt.setString(4,employee.email);
+				pstmt.setString(5,employee.phone);
+				pstmt.setString(6,employee.dept);
+				pstmt.setInt(7,employee.salary);
+				pstmt.setString(8,employee.joinDate);
+				pstmt.addBatch();
+			}
+			int[] results=pstmt.executeBatch();
+			return results;
+		}
+		catch(SQLException e) {
+			throw new EmployeeApplicationException("error in sql operation",e);
+		}
+	}
+	
+	public boolean transferEmployeesToDepartment(List<Integer> employeeIds,String dept) throws EmployeeApplicationException{
+		Connection conn=null;
+		try{
+			conn=DbConnection.getConnection();
+		    conn.setAutoCommit(false);
+			PreparedStatement pstmt=conn.prepareStatement(SqlConstants.UPDATE_EMPLOYEE_DEPT_BY_ID_QUERY);
+			for(Integer empId:employeeIds) {
+				pstmt.setString(1,dept);
+				pstmt.setInt(2,empId);
+				int updated=pstmt.executeUpdate();
+				if(updated==0) {
+					conn.rollback();
+					throw new EmployeeApplicationException("Transferred none of the employees.");
+				}
+			}
+			conn.commit();
+			return true;
+		}
+		catch(SQLException e) {
+			try {
+				conn.rollback();
+			}
+			catch(SQLException rollbackexception) {
+				throw new EmployeeApplicationException("error in rollback operation",rollbackexception);
+			}
+			throw new EmployeeApplicationException("error in sql operation",e);
+		}
+	}
 }
 	
 	

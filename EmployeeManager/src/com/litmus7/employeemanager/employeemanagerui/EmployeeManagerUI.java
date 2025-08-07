@@ -8,7 +8,9 @@ import com.litmus7.employeemanager.exception.EmployeeApplicationException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class EmployeeManagerUI {
 	
@@ -40,5 +42,18 @@ public class EmployeeManagerUI {
 			
 			res=emc.getEmployeesByDept("HR");						//lists the employee record(s) in a given dept.
 			System.out.println(res.message+'\n'+res.data);
+			
+			Employee emp3=new Employee(120,"Varun","Kumar","vk@gmail.com","8798567990","Sales",43000,"2023-09-07");
+			Employee emp4=new Employee(121,"Johan","Jacob","jcj21@gmail.com","6798346771","Engineering",12000,"2021-09-02");
+			Employee emp5=new Employee(122,"Johan","Jacob","jcj21@gmail.com","6798346771","Engineering",12000,"2021-09-02");
+			Employee emp6=new Employee(123,"Johan","Jacob","jcj21@gmail.com","6798346771","Engineering",12000,"2021-09-02");
+			Employee emp7=new Employee(124,"Johan","Jacob","jcj21@gmail.com","6798346771","Engineering",12000,"2021-09-02");
+			List<Employee> emps=new ArrayList((Arrays.asList(emp3,emp4,emp5,emp6,emp7)));
+			res=emc.addEmployeesInBatch(emps);        				//insert employees as a batch
+			System.out.println(res.message);
+			
+			List<Integer> ids=new ArrayList((Arrays.asList(100,101,103)));
+			res=emc.transferEmployeesToDepartment(ids,"HR");		//transfer only if all Ids exist in db
+			System.out.println(res.message);
 	}
 }

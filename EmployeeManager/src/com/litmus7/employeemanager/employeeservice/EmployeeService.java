@@ -97,6 +97,31 @@ public class EmployeeService {
 	  public List<Employee> getEmployeesByDept(String dept) throws EmployeeApplicationException{
 		  return dao.getEmployeesByDept(dept);
 	  }
+	  
+	  public int addEmployeesInBatch(List<Employee> employees) throws EmployeeApplicationException{
+		  areValidEmployees(employees);
+		  Iterator<Employee> iterator=employees.iterator();
+		  while(iterator.hasNext()){
+	    		Employee employee=iterator.next();
+	    		if(dao.checkIfExists(employee.empId))
+	    			iterator.remove();
+		  }
+		  if(employees.size()>0) {
+			  int[] results=dao.addEmployeesInBatch(employees);
+			  int successcount=0;
+			  for(int result:results) {
+				  if(result>=0)
+					  successcount++;
+			  }
+			  return successcount;
+		  }
+		  else 
+			  throw new EmployeeApplicationException("Every employee in the batch is either invalid or their empId already exists in the db.");
+	  }
+	  
+	  public boolean transferEmployeesToDepartment(List<Integer> employeeIds,String dept) throws EmployeeApplicationException{
+		  return dao.transferEmployeesToDepartment(employeeIds, dept);
+	  }
 }
 
 	

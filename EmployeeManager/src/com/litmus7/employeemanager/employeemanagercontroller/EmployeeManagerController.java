@@ -152,5 +152,36 @@ public class EmployeeManagerController {
 			return new Response(StatusCode.FAILURE,e.getMessage());
 		}
 	}
+	
+	public Response<List<Employee>> addEmployeesInBatch(List<Employee> employees){
+		int countoftotalemployees=employees.size();
+		try {
+			int countofinsertedemployees=ems.addEmployeesInBatch(employees);
+			if(countoftotalemployees==countofinsertedemployees)
+				return new Response(StatusCode.SUCCESS,"All "+countofinsertedemployees+" employees in the batch saved",countofinsertedemployees);
+			else
+				return new Response(StatusCode.PARTIAL_SUCCESS,"Saved "+countofinsertedemployees+" employee(s) out of the "+countoftotalemployees+" in the batch",countofinsertedemployees);
+			}
+		catch(EmployeeApplicationException e) {
+			return new Response(StatusCode.FAILURE,e.getMessage());
+		}
+		catch(Exception e) {
+			return new Response(StatusCode.FAILURE,e.getMessage());
+		}
+	}
+	
+	public Response<List<Employee>> transferEmployeesToDepartment(List<Integer> employeeIds,String dept){
+		try {
+			if(DataValidator.isValidDepartment(dept)) {
+				ems.transferEmployeesToDepartment(employeeIds,dept);
+				return new Response(StatusCode.SUCCESS,"Successfully transferred to "+dept);
+			}
+			else
+				return new Response(StatusCode.FAILURE,"Invalid department");
+		}
+		catch(EmployeeApplicationException e) {
+			return new Response(StatusCode.FAILURE,e.getMessage());
+		}
+	}
 }
 
