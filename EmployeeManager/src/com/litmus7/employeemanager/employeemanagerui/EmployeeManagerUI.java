@@ -53,7 +53,7 @@ public class EmployeeManagerUI {
 			System.out.println(res.message);
 			
 			List<Integer> ids=new ArrayList((Arrays.asList(100,101,103)));
-			res=emc.transferEmployeesToDepartment(ids,"HR");		//transfer only if all Ids exist in db
+			res=emc.transferEmployeesToDepartment(ids,"HR");		//transfer only if all empIds exist in db
 			System.out.println(res.message);
 	}
 }
