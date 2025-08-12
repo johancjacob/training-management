@@ -2,7 +2,6 @@ package com.litmus7.employeemanager.employeeservice;
 
 import com.litmus7.employeemanager.constants.LogMessages;
 import com.litmus7.employeemanager.dao.EmployeeDao;
-import com.litmus7.employeemanager.employeemanagercontroller.EmployeeManagerController;
 import com.litmus7.employeemanager.employeemodel.Employee;
 import com.litmus7.employeemanager.exception.EmployeeApplicationException;
 import com.litmus7.employeemanager.util.DataValidator;
