@@ -14,4 +14,6 @@ EmployeeManager./project
 EmployeeManager/.settings/
 EmployeeManager/bin/
 EmployeeManager/logs/
+RetailStoreInventoryManagementProject/.settings
+RetailStoreInventoryManagementProject/.gitignore
 EmployeeManager/src/mysql-connector-j-9.3.0.jar
