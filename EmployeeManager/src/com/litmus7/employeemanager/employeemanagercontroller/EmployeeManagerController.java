@@ -15,6 +15,7 @@ import com.litmus7.employeemanager.employeeservice.EmployeeService;
 import com.litmus7.employeemanager.exception.EmployeeApplicationException;
 import com.litmus7.employeemanager.util.CSVFileReader;
 import com.litmus7.employeemanager.util.DataValidator;
+import com.litmus7.employeemanager.util.ErrorCodeLoader;
 
 public class EmployeeManagerController {
 	EmployeeService ems=new EmployeeService();
@@ -27,29 +28,21 @@ public class EmployeeManagerController {
 			if(emp.firstName==null || emp.lastName==null || emp.email==null ||emp.joinDate==null) {
 				logger.warn("Missing values for empId={}",emp.empId);
 				logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"saveEmployee()");
-				return new Response(StatusCode.FAILURE,"missing values for "+emp.empId);
+				throw new EmployeeApplicationException(100);
 			}
 			int id=emp.empId;
-			Employee employee=ems.saveEmployee(emp);
-			
-			if(employee!=null) {
-				logger.info(LogMessages.SUCCESSFULLY_SAVED_LOG_MESSAGE+emp.empId);
-				logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"saveEmployee()");
-				return new Response<Employee>(StatusCode.SUCCESS,MessageConstants.SUCCESSFULLY_SAVED_MESSAGE+id,emp);
-			}
-			else {
-				logger.error(LogMessages.SAVE_FAILURE_LOG_MESSAGE+id);
-				logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"saveEmployee()");
-				return new Response<Employee>(StatusCode.FAILURE,MessageConstants.INVALID_DUPLICATE_ENTRY_MESSAGE+id,emp);
-			}
+			ems.saveEmployee(emp);
+			logger.info(LogMessages.SUCCESSFULLY_SAVED_LOG_MESSAGE+emp.empId);
+			logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"saveEmployee()");
+			return new Response<Employee>(StatusCode.SUCCESS,MessageConstants.SUCCESSFULLY_SAVED_MESSAGE+id,emp);
 		}
 		catch(EmployeeApplicationException e) {
 			logger.error(LogMessages.BUSINESS_EXCEPTION_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,ErrorCodeLoader.getMessage(String.valueOf(e.errorcode),emp.empId));
 		}
 		catch(Exception e) {
 			logger.fatal(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,e.getMessage());
 		}
 	}
 	
@@ -69,7 +62,7 @@ public class EmployeeManagerController {
 				else if(employees.size()==0) {
 					logger.error(LogMessages.SAVE_FAILURE_LOG_MESSAGE+"all records");
 					logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"saveEmployeesFromCSV()");
-					return new Response(StatusCode.FAILURE,MessageConstants.SAVED_NOTHING_FROM_CSV_MESSAGE);
+					throw new EmployeeApplicationException(103);
 				}
 				else {
 					logger.info("saved ",employees.size()+" from csv");
@@ -80,16 +73,16 @@ public class EmployeeManagerController {
 			else {
 				logger.fatal(LogMessages.NOT_CSV_LOG_MESSAGE);
 				logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"saveEmployeesFromCSV()");
-				return new Response<List<Employee>>(StatusCode.FAILURE,MessageConstants.NOT_CSV_MESSAGE);
+				throw new EmployeeApplicationException(102);
 			}
 		}
 		catch(EmployeeApplicationException e) {
 			logger.error(LogMessages.BUSINESS_EXCEPTION_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,ErrorCodeLoader.getMessage(String.valueOf(e.errorcode)));
 		}
 		catch(Exception e) {
 			logger.fatal(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,e.getMessage());
 		}
 	}
 	
@@ -108,7 +101,7 @@ public class EmployeeManagerController {
 			else if(employees.size()==0) {
 				logger.warn("No employees fetched");
 				logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"getEmployeesById()");
-				return new Response<List<Employee>>(StatusCode.FAILURE,"Could'nt fetch any of the records");
+				throw new EmployeeApplicationException(104);
 			}
 			else {
 				logger.warn("Only some employees could be fetched");
@@ -118,7 +111,7 @@ public class EmployeeManagerController {
 		}
 		catch(EmployeeApplicationException e) {
 			logger.error(LogMessages.BUSINESS_EXCEPTION_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,ErrorCodeLoader.getMessage(String.valueOf(e.errorcode)));
 		}
 		catch(Exception e) {
 			logger.fatal(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
@@ -134,20 +127,20 @@ public class EmployeeManagerController {
 				ems.updateEmployee(emp);
 				logger.info("Successfully updated");
 				logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"updateEmployee()");
-				return new Response(StatusCode.SUCCESS,"Successfully updated the employee record for "+emp.empId);
+				return new Response<>(StatusCode.SUCCESS,"Successfully updated the employee record for "+emp.empId);
 			}
 			else
 				logger.warn(MessageConstants.INVALID_EMPID_MESSAGE);
 				logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"updateEmployee()");
-				return new Response(StatusCode.FAILURE,MessageConstants.INVALID_EMPID_MESSAGE);
+	    	   	throw new EmployeeApplicationException(105);
 		}
 		catch(EmployeeApplicationException e) {
 			logger.error(LogMessages.BUSINESS_EXCEPTION_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,ErrorCodeLoader.getMessage(String.valueOf(e.errorcode),emp.empId));
 		}
 		catch(Exception e) {
 			logger.fatal(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,e.getMessage());
 		}
 	}
 	
@@ -155,30 +148,24 @@ public class EmployeeManagerController {
 		logger.trace(LogMessages.ENTER_METHOD_WITH_EMPID_LOG_MESSAGE,"deleteEmployeeById()",empId);
 		try {
 			if(DataValidator.isValidEmpId(empId)) {
-				if(ems.deleteEmployeeById(empId)) {
-					logger.info("Deletion successful");
-					logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"deleteEmployeeById");
-					return new Response(StatusCode.SUCCESS,"Successfully deleted the employee record for: "+empId);
-				}
-				else {
-					logger.warn("Deletion unsuccessful");
-				    logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"deleteEmployeeById");
-				    return new Response(StatusCode.FAILURE,"empId "+empId+" doesnt exist in db");
-				}
+				ems.deleteEmployeeById(empId);
+				logger.info("Deletion successful");
+				logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"deleteEmployeeById");
+				return new Response<>(StatusCode.SUCCESS,"Successfully deleted the employee record for: "+empId);
 			}
 			else {
 				logger.warn(MessageConstants.INVALID_EMPID_MESSAGE);
 				logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"deleteEmployeeById");
-				return new Response(StatusCode.FAILURE,MessageConstants.INVALID_EMPID_MESSAGE);
+				throw new EmployeeApplicationException(105);
 			}
 		}
 		catch(EmployeeApplicationException e) {
 			logger.error(LogMessages.BUSINESS_EXCEPTION_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,ErrorCodeLoader.getMessage(String.valueOf(e.errorcode),empId));
 		}
 		catch(Exception e) {
 			logger.fatal(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,e.getMessage());
 		}
 	}
 	
@@ -186,30 +173,24 @@ public class EmployeeManagerController {
 		logger.debug(LogMessages.ENTER_METHOD_WITH_EMPID_LOG_MESSAGE,"updateEmployeeSalaryById",empId);
 		try {
 			if(DataValidator.isValidEmpId(empId)) {
-				if(ems.updateEmployeeSalaryById(empId, salary)) {
-					logger.info("Sucessfully updated the salary");
-					logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"updateEmployeeSalaryById");
-					return new Response(StatusCode.SUCCESS,"Successfully updated salary for "+empId);
-				}
-				else {
-					logger.warn("Updation failed");
-					logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"updateEmployeeSalaryById");
-					return new Response(StatusCode.FAILURE,"record for "+empId+" doesnt exist");
-				}
+				ems.updateEmployeeSalaryById(empId, salary);
+				logger.info("Sucessfully updated the salary");
+				logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"updateEmployeeSalaryById");
+				return new Response<>(StatusCode.SUCCESS,"Successfully updated salary for "+empId);
 			}
 			else {
 				logger.warn(MessageConstants.INVALID_EMPID_MESSAGE);
 				logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"updateEmployeeSalaryById");
-				return new Response(StatusCode.FAILURE,MessageConstants.INVALID_EMPID_MESSAGE);
+				throw new EmployeeApplicationException(105);
 			}
 		}
 		catch(EmployeeApplicationException e) {
 			logger.error(LogMessages.BUSINESS_EXCEPTION_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,ErrorCodeLoader.getMessage(String.valueOf(e.errorcode),empId));
 		}
 		catch(Exception e) {
 			logger.fatal(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,e.getMessage());
 		}
 	}
 	
@@ -225,16 +206,16 @@ public class EmployeeManagerController {
 			else {
 				logger.warn("Could'nt fetch");
 				logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"getEmployeesByDept()");
-				return new Response(StatusCode.FAILURE,dept+" is not a valid department");
+				throw new EmployeeApplicationException(107);
 			}
 		}
 		catch(EmployeeApplicationException e) {
 			logger.error(LogMessages.BUSINESS_EXCEPTION_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,ErrorCodeLoader.getMessage(String.valueOf(e.errorcode),dept));
 		}
 		catch(Exception e) {
 			logger.fatal(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,e.getMessage());
 		}
 	}
 	
@@ -257,11 +238,11 @@ public class EmployeeManagerController {
 		}
 		catch(EmployeeApplicationException e) {
 			logger.error(LogMessages.BUSINESS_EXCEPTION_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,ErrorCodeLoader.getMessage(String.valueOf(e.errorcode)));
 		}
 		catch(Exception e) {
 			logger.fatal(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,e.getMessage());
 		}
 	}
 	
@@ -272,21 +253,21 @@ public class EmployeeManagerController {
 				ems.transferEmployeesToDepartment(employeeIds,dept);
 				logger.info("Successfully transferred all to "+dept);
 				logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"transferEmployeesToDepartment");
-				return new Response(StatusCode.SUCCESS,"Successfully transferred all the "+employeeIds.size() +" employees to "+dept);
+				return new Response<>(StatusCode.SUCCESS,"Successfully transferred all the "+employeeIds.size() +" employees to "+dept);
 			}
 			else {
 				logger.info("Transfer to "+dept+" failed");
 				logger.trace(LogMessages.EXIT_METHOD_LOG_MESSAGE,"transferEmployeesToDepartment");
-				return new Response(StatusCode.FAILURE,"Invalid department");
+				throw new EmployeeApplicationException(107);
 			}
 		}
 		catch(EmployeeApplicationException e) {
 			logger.error(LogMessages.BUSINESS_EXCEPTION_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,ErrorCodeLoader.getMessage(String.valueOf(e.errorcode),dept));
 		}
 		catch(Exception e) {
 			logger.fatal(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
-			return new Response(StatusCode.FAILURE,e.getMessage());
+			return new Response<>(StatusCode.FAILURE,e.getMessage());
 		}
 	}
 }

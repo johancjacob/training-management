@@ -28,4 +28,5 @@ public class LogMessages {
 	public static final String EXITING_AFTER_FAILURE_SAVES_IN_DB="Exiting after failing to save any of the employee(s) into db";
 	public static final String DB_CONNECTION_SUCCESS="Successfully connected to the database";
 	public static final String EXITING_AFTER_SUCCESS_DELETE_IN_DB="Exiting after successfuly deleting employee with empId {} from db";
+	public static final String EXITING_AFTER_FAIL_TRANSFER_IN_DB_LOG_MESSAGE="Extiting after failing to transfer employees to {} department";
 }

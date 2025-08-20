@@ -47,12 +47,16 @@ public class EmployeeService {
 	    		return emp;
 	    	}
 	       else {
-	    	   if(!isValidEmployee(emp))
+	    	   if(!isValidEmployee(emp)) {
 	    		   logger.warn(LogMessages.VALIDATION_FAILED_LOG_MESSAGE,emp.empId);
-	    	   else
+	    	   	   logger.warn(LogMessages.EXITING_AFTER_FAILURE_SAVE_IN_DB,emp.empId);
+	    	   	   throw new EmployeeApplicationException(101);
+	    	   }
+	    	   else {
 	    		   logger.warn(LogMessages.ALREADY_EXISTS_IN_DB_LOG_MESSAGE,emp.empId);
-	    	   logger.warn(LogMessages.EXITING_AFTER_FAILURE_SAVE_IN_DB,emp.empId);
-	    	   return null;
+	    		   logger.warn(LogMessages.EXITING_AFTER_FAILURE_SAVE_IN_DB,emp.empId);
+	    	   	   throw new EmployeeApplicationException(110);
+	    	   }
 	       }
 	    }
 	    		
@@ -96,12 +100,12 @@ public class EmployeeService {
 		    else if(!isValidEmployee(emp)) {
 		    	logger.warn(LogMessages.VALIDATION_FAILED_LOG_MESSAGE,emp.empId);
 		    	logger.warn(LogMessages.EXITING_AFTER_FAILURE_UPDATE_IN_DB,emp.empId);
-		    	throw new EmployeeApplicationException("Invalid employee data");
+		    	throw new EmployeeApplicationException(101);
 		    }
 		    else {
 		    	logger.warn(LogMessages.NON_EXISTING_IN_DB_LOG_MESSAGE,emp.empId);
 		    	logger.warn(LogMessages.EXITING_AFTER_FAILURE_UPDATE_IN_DB,emp.empId);
-		    	throw new EmployeeApplicationException("empId "+emp.empId+" does'nt exist in db");
+		    	throw new EmployeeApplicationException(106);
 		    }
 	  }
 	    
@@ -114,7 +118,7 @@ public class EmployeeService {
 	    	}
 	    	else {
 	    		logger.warn(LogMessages.NON_EXISTING_IN_DB_LOG_MESSAGE,empId);
-	    		return false;
+	    		throw new EmployeeApplicationException(106);
 	    	}
 	    }
 	    
@@ -127,7 +131,7 @@ public class EmployeeService {
 	    	}
 	    	else {
 	    		logger.warn(LogMessages.EXITING_AFTER_FAILURE_UPDATE_IN_DB,empId);
-	    		return false;
+	    		throw new EmployeeApplicationException(106);
 	    	}
 	    }
 	  
@@ -159,15 +163,22 @@ public class EmployeeService {
 		  }
 		  else {
 			  logger.warn(LogMessages.EXITING_AFTER_FAILURE_SAVES_IN_DB);
-			  throw new EmployeeApplicationException("Every employee in the batch is either invalid or their empId already exists in the db.");
+			  throw new EmployeeApplicationException(108);
 		  }
 	  }
 	  
 	  public boolean transferEmployeesToDepartment(List<Integer> employeeIds,String dept) throws EmployeeApplicationException{
 		  logger.debug(LogMessages.ENTER_METHOD_WITH_EMPIDS_LOG_MESSAGE,"transferEmployeesToDepartment",employeeIds.size());
-		  dao.transferEmployeesToDepartment(employeeIds, dept);
-		  logger.info(LogMessages.EXITING_AFTER_SUCCESS_UPDATES_IN_DB,employeeIds.size());
-		  return true;
+		  for(int id:employeeIds) {
+			  if(!dao.checkIfExists(id)) {
+				  logger.trace("A non-existing empId was found");
+				  logger.error(LogMessages.EXITING_AFTER_FAIL_TRANSFER_IN_DB_LOG_MESSAGE,dept);
+				  throw new EmployeeApplicationException(112);
+			  }
+		  }
+		 dao.transferEmployeesToDepartment(employeeIds, dept);
+		 logger.info(LogMessages.EXITING_AFTER_SUCCESS_UPDATES_IN_DB,employeeIds.size());
+		 return true;
 	  }
 }
 

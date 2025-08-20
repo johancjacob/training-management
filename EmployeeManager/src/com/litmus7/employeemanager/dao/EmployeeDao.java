@@ -40,7 +40,7 @@ public class EmployeeDao {
 	   }
 		catch(SQLException e) {
 			logger.error(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
-			throw new EmployeeApplicationException("error in sql operation",e);
+			throw new EmployeeApplicationException(109,e);
 		}
 	}
 	
@@ -63,7 +63,7 @@ public class EmployeeDao {
 		}
 		catch(SQLException e) {
 			logger.error(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
-			throw new EmployeeApplicationException("error in sql operation",e);
+			throw new EmployeeApplicationException(109,e);
 		}
     }
 	
@@ -88,7 +88,7 @@ public class EmployeeDao {
 		}
 		catch(SQLException e) {
 			logger.error(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
-			throw new EmployeeApplicationException("error in sql operation",e);
+			throw new EmployeeApplicationException(109,e);
 		}
 	}
 	
@@ -105,7 +105,7 @@ public class EmployeeDao {
 		}
 		catch(SQLException e) {
 			logger.error(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
-			throw new EmployeeApplicationException("error in sql operation",e);
+			throw new EmployeeApplicationException(109,e);
 		}
 	}
 	
@@ -123,7 +123,7 @@ public class EmployeeDao {
 		}
 		catch(SQLException e) {
 			logger.error(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
-			throw new EmployeeApplicationException("error in sql operation",e);
+			throw new EmployeeApplicationException(109,e);
 		}
 	}
 	
@@ -144,7 +144,7 @@ public class EmployeeDao {
 		}
 		catch(SQLException e) {
 			logger.error(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
-			throw new EmployeeApplicationException("error in sql operation",e);
+			throw new EmployeeApplicationException(109,e);
 		}
 	}
 	
@@ -162,7 +162,7 @@ public class EmployeeDao {
 				return false;
 		}
 		catch(SQLException e) {
-			throw new EmployeeApplicationException("error in sql operation",e);
+			throw new EmployeeApplicationException(109,e);
 		}
 	}
 	
@@ -188,7 +188,7 @@ public class EmployeeDao {
 		}
 		catch(SQLException e) {
 			logger.error(LogMessages.UNEXPECTED_ERROR_LOG_MESSAGE);
-			throw new EmployeeApplicationException("error in sql operation",e);
+			throw new EmployeeApplicationException(109,e);
 		}
 	}
 	
@@ -219,9 +219,9 @@ public class EmployeeDao {
 				conn.rollback();
 			}
 			catch(SQLException rollbackexception) {
-				throw new EmployeeApplicationException("error in rollback operation",rollbackexception);
+				throw new EmployeeApplicationException(111,rollbackexception);
 			}
-			throw new EmployeeApplicationException("error in sql operation",e);
+			throw new EmployeeApplicationException(109,e);
 		}
 	}
 }

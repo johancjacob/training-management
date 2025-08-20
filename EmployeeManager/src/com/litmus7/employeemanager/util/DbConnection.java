@@ -36,7 +36,7 @@ public class DbConnection {
     		return DriverManager.getConnection(url, user, password);
     	}
     	catch (SQLException e) {
-            throw new EmployeeApplicationException("Couldn't connect to DB due to invalid credentials", e);
+            throw new EmployeeApplicationException("Couldn't connect to DB due to invalid credentials",e);
         }
     }
 }
