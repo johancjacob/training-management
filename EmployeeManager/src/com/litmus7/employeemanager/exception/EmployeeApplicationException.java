@@ -23,5 +23,7 @@ public class EmployeeApplicationException extends Exception{
 	}
 	public EmployeeApplicationException(String message,Throwable cause){
 		super(message,cause);
-	}	
+	}
+	
+	
 }
