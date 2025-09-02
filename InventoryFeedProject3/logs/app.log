@@ -746,11 +746,78 @@
 2025-09-02 22:23:29 [Thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Exiting from run() for inputFile product4.csv
 2025-09-02 22:23:29 [Thread-0] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Moved file product3.csv to processed folder
 2025-09-02 22:23:29 [Thread-0] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Exiting from run() for inputFile product3.csv
-2025-09-02 22:40:13 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
-2025-09-02 22:40:13 [main] WARN  com.litmus7.inventoryfeed.controller.InventoryFeedController - Exiting saveFilesToDb() because no files exist in the input folder.
-2025-09-02 22:40:44 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
-2025-09-02 22:40:44 [main] WARN  com.litmus7.inventoryfeed.controller.InventoryFeedController - Exiting saveFilesToDb() because no files exist in the input folder.
-2025-09-02 22:40:46 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
-2025-09-02 22:40:46 [main] WARN  com.litmus7.inventoryfeed.controller.InventoryFeedController - Exiting saveFilesToDb() because no files exist in the input folder.
-2025-09-02 22:40:46 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
-2025-09-02 22:40:46 [main] WARN  com.litmus7.inventoryfeed.controller.InventoryFeedController - Exiting saveFilesToDb() because no files exist in the input folder.
+2025-09-02 22:41:02 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-02 22:41:02 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Saved none of the files to the Db
+2025-09-02 22:41:11 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-02 22:41:11 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Saved none of the files to the Db
+2025-09-02 22:43:47 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-02 22:43:47 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Saved none of the files to the Db
+2025-09-02 22:43:52 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-02 22:43:52 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Saved none of the files to the Db
+2025-09-02 22:43:57 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-02 22:43:57 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Saved none of the files to the Db
+2025-09-02 22:44:06 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-02 22:44:06 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Saved none of the files to the Db
+2025-09-02 22:44:21 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-02 22:44:21 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Saved none of the files to the Db
+2025-09-02 22:46:58 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-02 22:46:58 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method run()
+2025-09-02 22:46:58 [pool-2-thread-2] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method run()
+2025-09-02 22:46:58 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method saveFileToDb()
+2025-09-02 22:46:58 [pool-2-thread-2] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method saveFileToDb()
+2025-09-02 22:46:58 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Reading file inventory-feed\input\product3.csv
+2025-09-02 22:46:58 [pool-2-thread-2] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Reading file inventory-feed\input\product4.csv
+2025-09-02 22:46:58 [pool-2-thread-2] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method areValidProducts()
+2025-09-02 22:46:58 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method areValidProducts()
+2025-09-02 22:46:58 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Exititng areValidProducts() after getting 2 valid product(s)
+2025-09-02 22:46:58 [pool-2-thread-2] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Exititng areValidProducts() after getting 1 valid product(s)
+2025-09-02 22:46:58 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.dao.InventoryFeedDao - Entered method saveProductsInFileToDb()
+2025-09-02 22:46:58 [pool-2-thread-2] TRACE com.litmus7.inventoryfeed.dao.InventoryFeedDao - Entered method saveProductsInFileToDb()
+2025-09-02 22:46:59 [pool-2-thread-2] INFO  com.litmus7.inventoryfeed.dao.InventoryFeedDao - Exiting from dao after saving records of file inventory-feed\input\product4.csv to Db
+2025-09-02 22:46:59 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.dao.InventoryFeedDao - Exiting from dao after saving records of file inventory-feed\input\product3.csv to Db
+2025-09-02 22:46:59 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Moving file product3.csv to processed folder
+2025-09-02 22:46:59 [pool-2-thread-2] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Moving file product4.csv to processed folder
+2025-09-02 22:46:59 [pool-2-thread-2] INFO  com.litmus7.inventoryfeed.util.FileMover - Moving the file inventory-feed\input\product4.csv to processed folder
+2025-09-02 22:46:59 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.util.FileMover - Moving the file inventory-feed\input\product3.csv to processed folder
+2025-09-02 22:46:59 [pool-2-thread-2] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Moved file product4.csv to processed folder
+2025-09-02 22:46:59 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Moved file product3.csv to processed folder
+2025-09-02 22:46:59 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Exiting from run() for inputFile product3.csv
+2025-09-02 22:46:59 [pool-2-thread-2] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Exiting from run() for inputFile product4.csv
+2025-09-02 22:47:20 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-02 22:47:20 [main] WARN  com.litmus7.inventoryfeed.controller.InventoryFeedController - Exiting saveFilesToDb() because no files exist in the input folder.
+2025-09-02 22:48:22 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-02 22:48:22 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method run()
+2025-09-02 22:48:22 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method saveFileToDb()
+2025-09-02 22:48:22 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Reading file inventory-feed\input\product2.csv
+2025-09-02 22:48:22 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method areValidProducts()
+2025-09-02 22:48:22 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Exititng areValidProducts() after getting 1 valid product(s)
+2025-09-02 22:48:22 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.dao.InventoryFeedDao - Entered method saveProductsInFileToDb()
+2025-09-02 22:48:23 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.dao.InventoryFeedDao - Exiting from dao after saving records of file inventory-feed\input\product2.csv to Db
+2025-09-02 22:48:23 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Moving file product2.csv to processed folder
+2025-09-02 22:48:23 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.util.FileMover - Moving the file inventory-feed\input\product2.csv to processed folder
+2025-09-02 22:48:23 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Moved file product2.csv to processed folder
+2025-09-02 22:48:23 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Exiting from run() for inputFile product2.csv
+2025-09-02 22:49:54 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-02 22:49:54 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method run()
+2025-09-02 22:49:54 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method saveFileToDb()
+2025-09-02 22:49:54 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Reading file inventory-feed\input\product2.csv
+2025-09-02 22:49:54 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method areValidProducts()
+2025-09-02 22:49:54 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Exititng areValidProducts() after getting 1 valid product(s)
+2025-09-02 22:49:54 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.dao.InventoryFeedDao - Entered method saveProductsInFileToDb()
+2025-09-02 22:49:54 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.dao.InventoryFeedDao - Exiting from dao after saving records of file inventory-feed\input\product2.csv to Db
+2025-09-02 22:49:54 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Moving file product2.csv to processed folder
+2025-09-02 22:49:54 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.util.FileMover - Moving the file inventory-feed\input\product2.csv to processed folder
+2025-09-02 22:49:54 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Moved file product2.csv to processed folder
+2025-09-02 22:49:54 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Exiting from run() for inputFile product2.csv
+2025-09-02 22:51:16 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-02 22:51:16 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method run()
+2025-09-02 22:51:16 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method saveFileToDb()
+2025-09-02 22:51:16 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Reading file inventory-feed\input\product2.csv
+2025-09-02 22:51:16 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method areValidProducts()
+2025-09-02 22:51:16 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Exititng areValidProducts() after getting 1 valid product(s)
+2025-09-02 22:51:16 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.dao.InventoryFeedDao - Entered method saveProductsInFileToDb()
+2025-09-02 22:51:16 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.dao.InventoryFeedDao - Exiting from dao after saving records of file inventory-feed\input\product2.csv to Db
+2025-09-02 22:51:16 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Moving file product2.csv to processed folder
+2025-09-02 22:51:16 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.util.FileMover - Moving the file inventory-feed\input\product2.csv to processed folder
+2025-09-02 22:51:16 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Moved file product2.csv to processed folder
+2025-09-02 22:51:16 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Exiting from run() for inputFile product2.csv

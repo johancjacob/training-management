@@ -3,6 +3,9 @@ package com.litmus7.inventoryfeed.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.logging.log4j.LogManager;
@@ -36,28 +39,25 @@ public class InventoryFeedController {
 				}
 			}
 			AtomicInteger savedCount=new AtomicInteger(0);
-			List<Thread> threads=new ArrayList();
+			ExecutorService executor=Executors.newFixedThreadPool(5);
 			for(File inputFile:inputFiles) {
 				InventoryFeedService service=new InventoryFeedService(inputFile,savedCount);
-				Thread t=new Thread(service);
-				t.start();
-				threads.add(t);
+				executor.submit(service);
 			}
-			for(Thread t:threads) {
-				try {
-					t.join();
-				}
-				catch(Exception e) {
-					
-				}
+			executor.shutdown();
+			try {
+				executor.awaitTermination(1,TimeUnit.HOURS);
 			}
+			catch(InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+			
 			if(savedCount.get()==countOfInputFiles) {
-				logger.trace(LogMessages.SAVED_ALL_FILES_LOG_MESSAGE,savedCount.get());
 				return new Response(StatusCode.SUCCESS,"All files saved successfully");
 			}
 			else if(savedCount.get()==0){
 				logger.trace(LogMessages.SAVED_NO_FILES_LOG_MESSAGE);
-				return new Response(StatusCode.FAILURE,savedCount.get()+" Couldnt save any of the files");
+				return new Response(StatusCode.FAILURE,"Could'nt save any of the files");
 			}
 			else {
 				logger.trace(LogMessages.SAVED_SOME_FILES_LOG_MESSAGE,savedCount.get(),countOfInputFiles);
