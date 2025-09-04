@@ -686,3 +686,11 @@
 2025-08-30 23:01:16 [main] WARN  com.litmus7.inventoryfeed.controller.InventoryFeedController - Exiting saveFilesToDb() because no files exist in the input folder.
 2025-09-02 21:24:30 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
 2025-09-02 21:24:30 [main] WARN  com.litmus7.inventoryfeed.controller.InventoryFeedController - Exiting saveFilesToDb() because no files exist in the input folder.
+2025-09-04 18:18:02 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-04 18:18:02 [main] WARN  com.litmus7.inventoryfeed.controller.InventoryFeedController - Exiting saveFilesToDb() because no files exist in the input folder.
+2025-09-04 18:18:09 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-04 18:18:09 [main] WARN  com.litmus7.inventoryfeed.controller.InventoryFeedController - Exiting saveFilesToDb() because no files exist in the input folder.
+2025-09-04 18:48:42 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-04 18:48:42 [main] WARN  com.litmus7.inventoryfeed.controller.InventoryFeedController - Exiting saveFilesToDb() because no files exist in the input folder.
+2025-09-04 18:49:10 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-04 18:49:10 [main] WARN  com.litmus7.inventoryfeed.controller.InventoryFeedController - Exiting saveFilesToDb() because no files exist in the input folder.

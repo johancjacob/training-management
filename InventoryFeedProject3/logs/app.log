@@ -821,3 +821,15 @@
 2025-09-02 22:51:16 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.util.FileMover - Moving the file inventory-feed\input\product2.csv to processed folder
 2025-09-02 22:51:16 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Moved file product2.csv to processed folder
 2025-09-02 22:51:16 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Exiting from run() for inputFile product2.csv
+2025-09-02 23:14:08 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Entered method saveFilesToDb()
+2025-09-02 23:14:08 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method run()
+2025-09-02 23:14:08 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method saveFileToDb()
+2025-09-02 23:14:08 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Reading file inventory-feed\input\product2.csv
+2025-09-02 23:14:08 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Entered method areValidProducts()
+2025-09-02 23:14:08 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Exititng areValidProducts() after getting 1 valid product(s)
+2025-09-02 23:14:08 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.dao.InventoryFeedDao - Entered method saveProductsInFileToDb()
+2025-09-02 23:14:09 [pool-2-thread-1] WARN  com.litmus7.inventoryfeed.dao.InventoryFeedDao - Exiting from dao after not saving records of file product2.csv to Db
+2025-09-02 23:14:09 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.service.InventoryFeedService - Moving file product2.csv to error folder
+2025-09-02 23:14:09 [pool-2-thread-1] INFO  com.litmus7.inventoryfeed.util.FileMover - Moving the file inventory-feed\input\product2.csv to error folder
+2025-09-02 23:14:09 [pool-2-thread-1] TRACE com.litmus7.inventoryfeed.service.InventoryFeedService - Exiting from run() for inputFile product2.csv
+2025-09-02 23:14:09 [main] TRACE com.litmus7.inventoryfeed.controller.InventoryFeedController - Saved none of the files to the Db
